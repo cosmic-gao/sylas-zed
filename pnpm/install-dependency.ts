@@ -19,9 +19,7 @@ export interface InstallDependencyOptions extends BuildPnpmOptions {
  * @param options - 完整的安装选项，包含依赖名、路径和 PNPM 标志。
  * @returns 包含依赖安装后本地完整路径的对象。
  */
-export const install_dependency = async (
-    options: InstallDependencyOptions
-): Promise<{ dest: string }> => {
+export async function install_dependency(options: InstallDependencyOptions): Promise<{ dest: string }> {
     const {
         dependency,
         install_path,
@@ -44,44 +42,3 @@ export const install_dependency = async (
 
     return { dest };
 };
-
-async function run_examples() {
-    const project_root = '/sylas-zed';
-
-    console.log('--- 示例 1: 安装生产依赖 (axios@1.0.0) ---');
-    const options_prod: InstallDependencyOptions = {
-        dependency: 'axios@1.0.0',
-        install_path: project_root,
-        save: true,
-        is_dev: false, // 生产依赖
-
-    };
-
-    try {
-        const result_prod = await install_dependency(options_prod);
-        console.log(`✨ 依赖安装完成！目标路径: ${result_prod.dest}`);
-    } catch (error) {
-        console.error('安装失败:', error);
-    }
-
-    console.log('\n' + '-'.repeat(40) + '\n');
-
-    console.log('--- 示例 2: 安装开发依赖 (typescript@5.3.3) ---');
-    const options_dev: InstallDependencyOptions = {
-        dependency: 'typescript@5.3.3',
-        install_path: project_root,
-        save: true,
-        is_dev: true, // 开发依赖
-        silent: true // 静默模式
-    };
-
-    try {
-        const result_dev = await install_dependency(options_dev);
-        console.log(`✨ 依赖安装完成！目标路径: ${result_dev.dest}`);
-    } catch (error) {
-        console.error('安装失败:', error);
-    }
-}
-
-// 运行示例
-run_examples();

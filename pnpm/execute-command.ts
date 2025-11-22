@@ -18,7 +18,7 @@ const EXECUTABLE = 'pnpm';
  * * @param options - 命令执行选项。
  * @returns 当子进程成功退出时 resolve，否则 reject 并附带错误信息。
  */
-export const execute_command = (options: ExecuteCommandOptions): Promise<void> => {
+export function execute_command(options: ExecuteCommandOptions): Promise<void> {
     const { command_args, path, silent = false, use_shell = false } = options;
 
     const full_command = `${EXECUTABLE} ${command_args.join(' ')}`;
